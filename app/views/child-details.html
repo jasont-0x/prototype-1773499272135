@@ -1,0 +1,36 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What is your child's full name?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["child-details"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["child-details"], href: "#child-details" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukInput({
+      id: "child-details",
+      name: "child-details",
+      label: {
+        text: "What is your child's full name?",
+        isPageHeading: true,
+        classes: "govuk-label--l"
+      },
+      hint: { text: "Enter their name as it appears on their birth certificate." },
+      errorMessage: errors["child-details"] if errors else null,
+      value: data["child-details"]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
